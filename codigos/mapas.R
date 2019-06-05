@@ -17,8 +17,8 @@ library(ggplot2)
 
 mexico<-map_data("worldHires", "Mexico")
 data<-read.csv(text=x_coordenadas,header = T)
-km<-read.csv(text=x_km,header = T,row.names = T)
-casetas<-read.csv(text=x_casetas,header = T,row.names = T)
+km<-read.csv(text=x_km,header = T,row.names = 1)
+casetas<-read.csv(text=x_casetas,header = T,row.names = 1)
 
 NAmap <- ggplot() + geom_polygon(data = mexico, 
                                  aes(x=long, y = lat, group = group), 
@@ -29,13 +29,13 @@ NAmap2 <- ggplot() + geom_polygon(data = mexico,
                                  fill = "white", 
                                  color="gray") 
 #mapa con nodos
-NAmap+geom_point(data = as.data.frame(data),
+mn<-NAmap+geom_point(data = as.data.frame(data),
                  aes(y=Latitud,x=Longitud),
                  shape=21, size=5.0)
 #mapa con fondo
-NAmap + theme(line = element_blank(),
-                       text = element_blank(), 
-                       panel.background = element_rect(fill = "steelblue"))
+#NAmap + theme(line = element_blank(),
+ #                      text = element_blank(), 
+  #                     panel.background = element_rect(fill = "steelblue"))
 
 #mapa con texto
 map_txt<-NAmap+geom_text(data=as.data.frame(data),
@@ -78,7 +78,7 @@ for(i in 1:31){
   }
 }
 
-NAmap2+geom_segment(aes(x=x,
+red<-NAmap2+geom_segment(aes(x=x,
                       y=y,
                       xend=xend,
                       yend=yend),
